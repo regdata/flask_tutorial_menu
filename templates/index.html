@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Restaurants</title>
+{% endblock head %}
+
+{% block body %}
+    <h1>Add New Restaurant</h1>
+    <form>
+    Restaurant Name: <input type='text' name='name' id='name'>
+    <input type='submit' value='Add Restaurant'>
+    </form>
+    <hr>
+    
+    <h1>Restaurant List<h1>
+
+    {% for r in Restaurants  %}
+        <h3>{{ Restaurants.name }}</h3>
+        <a href='/restaurants/delete/{{ Restaurants.id }}'>Remove Restaurant</a>
+        <a href='/restaurants/edit/{{ Restaurants.id }}'>Edit Restaurant Name</a>
+    {% endfor %}
+{% endblock body %}

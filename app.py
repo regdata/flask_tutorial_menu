@@ -14,12 +14,17 @@ class Restaurants(db.Model):
 
 class MenuItems(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    rest_id = db.Column(db.Integer, foreign_key=True)
+    rest_id = db.Column(db.Integer, nullable=False)
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text)
 
     def __repr__(self):
         return f'Menu Item {self.id}'
 
-if __name__ == "main":
+@app.route('/')
+@app.route('/restaurants')
+def index():
+   return render_template('index.html')
+
+if __name__ == "__main__":
     app.run(debug=True)
