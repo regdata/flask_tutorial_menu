@@ -21,10 +21,36 @@ class MenuItems(db.Model):
     def __repr__(self):
         return f'Menu Item {self.id}'
 
-@app.route('/')
-@app.route('/restaurants')
-def index():
-   return render_template('index.html')
+@app.route('/', methods=['GET', 'POST'])
+def restaurant_list():
+
+    if request.method == 'POST':
+        rest_name = request.form['name']
+        new_restaurant = Restaurants(name=rest_name)
+        db.session.add(new_restaurant)
+        db.session.commit()
+        return redirect('/')
+    else:
+        all_restaurants = Restaurants.query.order_by(Restaurants.name).all()
+        return render_template('index.html', restaurants = all_restaurants)
+
+@app.route('/delete/<int:id>')
+def delete(id):
+    rest = Restaurants.query.get_or_404(id)
+    db.session.delete(rest)
+    db.session.commit()
+    return redirect('/')
+
+@app.route('/edit/<int:id>', methods=['GET', 'POST'])
+def edit(id):
+    rest = Restaurants.query.get_or_404(id)
+    if request.method == 'POST':
+        rest.name = request.form['name']
+        db.session.commit()
+        return redirect('/')
+    else:
+        return render_template('edit.html', restaurant = rest)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

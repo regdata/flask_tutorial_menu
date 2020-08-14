@@ -6,17 +6,19 @@
 
 {% block body %}
     <h1>Add New Restaurant</h1>
-    <form>
+    <form action='/' method='POST'>
     Restaurant Name: <input type='text' name='name' id='name'>
     <input type='submit' value='Add Restaurant'>
     </form>
     <hr>
     
     <h1>Restaurant List<h1>
+    <hr>
 
-    {% for r in Restaurants  %}
-        <h3>{{ Restaurants.name }}</h3>
-        <a href='/restaurants/delete/{{ Restaurants.id }}'>Remove Restaurant</a>
-        <a href='/restaurants/edit/{{ Restaurants.id }}'>Edit Restaurant Name</a>
+    {% for r in restaurants  %}
+        <h3>{{ r.name }}</h3>
+        <a href='/delete/{{ r.id }}'>Remove Restaurant</a><br>
+        <a href='/edit/{{ r.id }}'>Edit Restaurant Name</a>
+        <hr>
     {% endfor %}
 {% endblock body %}
