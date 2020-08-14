@@ -56,13 +56,13 @@ def edit(id):
 
 @app.route('/<int:id>', methods=['GET', 'POST'])
 def menu_items_list(id):
-    all_menu_items = MenuItems.query.filter_by(rest_id=id).all()
+    all_menu_items = MenuItems.query.filter_by(restaurant_id=id).all()
     rest = Restaurants.query.get_or_404(id)
     
     if request.method == 'POST':
         menu_item_name = request.form['name']
         menu_item_description = request.form['description']
-        new_menu_item = MenuItems(rest_id=id, name=menu_item_name, description=menu_item_description)
+        new_menu_item = MenuItems(restaurant_id=id, name=menu_item_name, description=menu_item_description)
         db.session.add(new_menu_item)
         db.session.commit()
         return redirect(f'/{id}')
