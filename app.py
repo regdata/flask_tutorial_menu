@@ -8,6 +8,7 @@ db = SQLAlchemy(app)
 class Restaurants(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
+    menu_items = db.relationship('MenuItems', cascade='all, delete-orphan', backref=db.backref('restaurants', lazy=True))
         
     def __repr__(self):
         return f'Restaurant {self.name}'
@@ -16,9 +17,7 @@ class MenuItems(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=False)
-    
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'),nullable=False)
-    restaurant = db.relationship('Restaurants', cascade='all, delete', backref=db.backref('menu_item', lazy=True))
     
     def __repr__(self):
         return f'Menu Item {self.name}'
