@@ -1,0 +1,22 @@
+{% extends 'base.html' %} 
+
+{% block head %}
+<title>{{ restaurant.name }}</title>
+{% endblock head %} 
+
+{% block body %}
+    <h1>{{ restaurant.name }}</h1>
+    <hr>
+    <h2>Add New Menu Item</h2>
+    <form action="/{{ restaurant.id }}" method="POST">
+        Menu Item Name: <input type="text" name="name" id="name"> Description: <input type="text" name="description" id="description">
+    <input type="submit" value="Add Menu Item">
+    </form>
+    <hr> 
+    
+    {% for m in menu_items %}
+        <h3>{{ m.name }}</h3>
+        <p>{{ m.description }}</p>
+    {% endfor %} 
+
+{% endblock body %}

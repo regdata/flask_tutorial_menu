@@ -16,7 +16,7 @@
     <hr>
 
     {% for r in restaurants  %}
-        <h3>{{ r.name }}</h3>
+        <h3><a href='/{{ r.id }}'>{{ r.name }}</a></h3>
         <a href='/delete/{{ r.id }}'>Remove Restaurant</a><br>
         <a href='/edit/{{ r.id }}'>Edit Restaurant Name</a>
         <hr>
