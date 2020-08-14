@@ -18,7 +18,7 @@ class MenuItems(db.Model):
     description = db.Column(db.Text, nullable=False)
     
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'),nullable=False)
-    restaurant = db.relationship('Restaurants', backref=db.backref('menu_item', lazy=True))
+    restaurant = db.relationship('Restaurants', cascade='all, delete', backref=db.backref('menu_item', lazy=True))
     
     def __repr__(self):
         return f'Menu Item {self.name}'
