@@ -1,0 +1,14 @@
+{% extends 'base.html' %} 
+
+{% block head %}
+<title>Edit Menu Item</title>
+{% endblock head %} 
+
+{% block body %}
+    <h1>Edit Menu Item</h1>
+    <form action="/{{ restaurant.id }}/edit/{{ menu_item.id }}" method='POST'>
+    Menu Item Name: <input type='text' name='name' id='name' value='{{ menu_item.name}}'> 
+    Menu Item Description: <input type='text' name='description' id="description" value="{{ menu_item.description }}">
+    <input type='submit' value='Update'>
+    </form>
+{% endblock body %}

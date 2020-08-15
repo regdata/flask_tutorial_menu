@@ -6,6 +6,7 @@
 
 {% block body %}
     <h1>{{ restaurant.name }}</h1>
+    <p><a href='/'>Go Home</a></p>
     <hr>
     <h2>Add New Menu Item</h2>
     <form action="/{{ restaurant.id }}" method="POST">
@@ -17,6 +18,8 @@
     {% for m in menu_items %}
         <h3>{{ m.name }}</h3>
         <p>{{ m.description }}</p>
+        <a href='/{{ restaurant.id }}/delete/{{ m.id }}'>Remove Menu Item</a><br>
+        <a href='/{{ restaurant.id }}/edit/{{ m.id }}'>Edit Menu Item</a>
     {% endfor %} 
 
 {% endblock body %}

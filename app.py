@@ -67,7 +67,25 @@ def menu_items_list(id):
         return redirect(f'/{id}')
     
     return render_template('menu_items.html', restaurant=rest, menu_items=all_menu_items)
+    
+@app.route('/<int:rest_id>/delete/<int:id>')
+def delete_menu_item(rest_id, id):
+    menu_item = MenuItems.query.get_or_404(id)
+    db.session.delete(menu_item)
+    db.session.commit()
+    return redirect(f'/{rest_id}')
 
+@app.route('/<int:rest_id>/edit/<int:id>', methods=['GET', 'POST'])
+def edit_menu_item(rest_id, id):
+    menu_item = MenuItems.query.get_or_404(id)
+    rest = Restaurants.query.get_or_404(rest_id)
+    if request.method == 'POST':
+        menu_item.name = request.form['name']
+        menu_item.description = request.form['description']
+        db.session.commit()
+        return redirect(f'/{rest.id}')
+    else:
+        return render_template('edit_menu_item.html', restaurant= rest, menu_item = menu_item)
 
 if __name__ == "__main__":
     app.run(debug=True)

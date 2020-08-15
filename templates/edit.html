@@ -5,7 +5,7 @@
 {% endblock head %} 
 
 {% block body %}
-<h1>Edit Restaurant Nasme</h1>
+<h1>Edit Restaurant Name</h1>
 <form action="/edit/{{ restaurant.id }}"  method='POST'>
 Restaurant Name: <input type='text' name='name' id='name' value='{{ restaurant.name}}'>
 <input type='submit' value='Update'>
