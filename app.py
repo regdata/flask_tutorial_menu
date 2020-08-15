@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -12,6 +12,13 @@ class Restaurants(db.Model):
         
     def __repr__(self):
         return f'Restaurant {self.name}'
+    
+    @property
+    def serialize(self):
+        return{
+            'id': self.id,
+            'name': self.name,
+            }
 
 class MenuItems(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -21,7 +28,26 @@ class MenuItems(db.Model):
     
     def __repr__(self):
         return f'Menu Item {self.name}'
+    
+    @property
+    def serialize(self):
+        return{
+            'id': self.id,
+            'name': self.name,
+            'description': self.description,
+            'restaurant_id': self.restaurant_id
+            }
 
+
+@app.route('/<int:id>/JSON')
+def restaurant_menu_JSON(id):
+    menu_items = MenuItems.query.filter_by(restaurant_id = id).all()
+    return jsonify(MenuItems=[i.serialize for i in menu_items])
+
+@app.route('/<int:rest_id>/<int:menu_item_id>/JSON')
+def menu_item_JSON(rest_id, menu_item_id):
+    menu_item = MenuItems.query.filter_by(id = menu_item_id).one()
+    return jsonify(menu_item=menu_item.serialize)
 
 @app.route('/', methods=['GET', 'POST'])
 def restaurant_list():
